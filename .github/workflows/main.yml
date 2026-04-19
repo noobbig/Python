@@ -9,6 +9,15 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
+      # বিল্ডোজার ক্যাশ সেটআপ (সময় বাঁচানোর আসল যাদু এখানে)
+      - name: Cache Buildozer
+        uses: actions/cache@v4
+        with:
+          path: .buildozer
+          key: ${{ runner.os }}-buildozer-${{ hashFiles('buildozer.spec') }}
+          restore-keys: |
+            ${{ runner.os }}-buildozer-
+
       - name: Execute Build Script
         run: |
           chmod +x comandList.sh
