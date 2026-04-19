@@ -1,16 +1,20 @@
 name: Build Kivy APK
-on: [push]
+on: [push, workflow_dispatch] # workflow_dispatch দিলে ম্যানুয়ালি রান করা যাবে
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4 # আপডেট করা হয়েছে v4 এ
+
       - name: Build with Buildozer
         uses: ArtemSBulgakov/buildozer-action@v1
         with:
           command: buildozer android debug
+          buildozer_version: master
+
       - name: Upload APK
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4 # এখানে v3 এর বদলে v4 দিতে হবে
         with:
-          name: package
+          name: my-kivy-app-apk
           path: bin/*.apk
